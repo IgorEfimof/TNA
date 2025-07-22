@@ -97,10 +97,14 @@
             </div>
             
             <div class="analysis-row hidden" id="advanced3">
-                <div class="analysis-label">Динамика:</div>
-                <div class="analysis-value"><span id="dynamics">-</span></div>
+               <div class="analysis-label">Динамика:</div>
+               <div class="analysis-value"><span id="dynamics">-</span></div>
             </div>
-        </div>
+            <div class="analysis-row">
+              <div class="analysis-label">Победитель по динамике:</div>
+              <div class="analysis-value"><span id="dynamics-winner">-</span></div>
+            </div>
+            </div>
         
         <button id="toggleAdvanced" class="clear-btn" style="margin-bottom:5px">▼ Доп. анализ</button>
         <button id="clearBtn" class="clear-btn">Очистить данные</button>
@@ -294,8 +298,20 @@
                     
                     if (diff2 > 0) dynamics.push(`И2 +${diff2}%`);
                     else if (diff2 < 0) dynamics.push(`И2 ${diff2}%`);
-                    
                     document.getElementById('dynamics').textContent = dynamics.join(', ') || 'стабильно';
+                   
+                     // После вычисления diff1 и diff2
+                    let winnerText = '';
+                    if (diff1 > 0 && diff1 > diff2) {
+                    winnerText = 'Победитель по динамике: Игрок 1';
+                    } else if (diff2 > 0 && diff2 > diff1) {
+                    winnerText = 'Победитель по динамике: Игрок 2';
+                    } else if (diff1 > 0 && diff2 > 0 && diff1 == diff2) {
+                    winnerText = 'Динамика равная: оба игрока с положительной динамикой';
+                    } else {
+                    winnerText = 'Нет явного победителя по динамике';
+                    }
+                    document.getElementById('dynamics-winner').textContent = winnerText;
                 }
             }
             
